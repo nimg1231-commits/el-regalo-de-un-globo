@@ -1,0 +1,653 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: #8fc8ef;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #40566b;
+}
+
+/* ===== PANTALLA DE INICIO ===== */
+#overlay,
+#transition,
+#doneScreen,
+#giftScreen,
+#finalScreen {
+  padding: 0;
+  background: #c9fbff;
+  backdrop-filter: none;
+}
+
+/* antes: .startPanel, .panel { */
+.startPanel {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  aspect-ratio: 16 / 9;
+}
+
+/* antes: .startBg, .startBg2 { */
+.startBg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* antes: .startBtn, .mainButton { */
+.startBtn {
+  position: absolute;
+  left: 44.7%;
+  top: 60.8%;
+  width: 11.7%;
+  height: 16.4%;
+
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  transition: transform .2s ease, filter .2s ease;
+}
+
+/* antes: .startBtn img, .mainButton img { */
+.startBtn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* antes: .startBtn:hover, .mainButton:hover { */
+.startBtn:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 6px 10px rgba(200, 90, 120, .35));
+}
+
+/* antes: .startBtn:active, .mainButton:active { */
+.startBtn:active {
+  transform: scale(.96);
+}
+
+#giftBtn {
+  left: 43.5%;
+  top: 46%;
+  width: 14%;
+  height: 29%;
+}
+
+/* Botón "Volver a jugar" sobre la imagen final */
+.restartBtn {
+  position: absolute;
+  left: 52.5%;
+  bottom: 2.5%;
+  transform: translateX(-50%);
+
+  padding: .5em 1.2em;
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 30px;
+
+  background: rgba(255,255,255,.7);
+  color: #40566b;
+  font-size: clamp(11px, 1.6vw, 18px);
+  cursor: pointer;
+}
+
+.restartBtn:hover {
+  background: rgba(255,255,255,.95);
+}
+/* --- end ---*/
+
+button {
+  font: inherit;
+}
+
+#gameCanvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  touch-action: none;
+}
+
+#hud {
+  position: absolute;
+
+  top: 15px;
+  left: 18px;
+  right: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+#levelLabel {
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  background: rgba(255,255,255,.65);
+
+  font-size: 14px;
+
+  box-shadow: 0 5px 18px rgba(45,76,105,.15);
+}
+
+#musicBtn {
+  border: 1px solid rgba(255,255,255,.8);
+
+  background: rgba(255,255,255,.65);
+
+  color: #40566b;
+
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  cursor: pointer;
+
+  pointer-events: auto;
+}
+
+#progressWrap {
+  position: absolute;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: min(310px, 42vw);
+
+  text-align: center;
+}
+
+#progressText {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.progressBar {
+  height: 8px;
+
+  background: rgba(255,255,255,.5);
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+#progressFill {
+  width: 0%;
+
+  height: 100%;
+
+  background: #df91a8;
+
+  transition: width .25s ease;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 20;
+
+  display: grid;
+
+  place-items: center;
+
+  padding: 20px;
+
+  background: rgba(100,154,190,.12);
+
+  backdrop-filter: blur(3px);
+
+  transition: opacity .5s ease;
+}
+
+.overlay.fadeOut {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel,
+.finalCard {
+  width: min(650px, 94vw);
+
+  padding: clamp(28px, 6vw, 55px);
+
+  text-align: center;
+
+  border-radius: 30px;
+
+  border: 1px solid rgba(255,255,255,.85);
+
+  background: rgba(255,250,247,.82);
+
+  box-shadow:
+    0 25px 70px rgba(44,74,99,.23);
+
+  backdrop-filter: blur(14px);
+
+  animation: panelIn .7s ease;
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+
+  font-size: 12px;
+
+  letter-spacing: .25em;
+
+  text-transform: uppercase;
+
+  color: #72889d;
+}
+
+h1 {
+  margin: 0;
+
+  font-size: clamp(42px,8vw,78px);
+
+  line-height: .95;
+
+  font-weight: 500;
+}
+
+h1 span {
+  color: #cc718c;
+}
+
+h2 {
+  font-size: clamp(32px,6vw,54px);
+
+  font-weight: 500;
+
+  margin: 12px 0;
+}
+
+.subtitle {
+  font-size: 18px;
+
+  line-height: 1.6;
+
+  margin: 25px auto;
+}
+
+.mainButton {
+  border: 0;
+
+  padding: 14px 28px;
+
+  border-radius: 50px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dc8ca4,
+      #c96e8b
+    );
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 25px rgba(197,104,135,.3);
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+}
+
+.mainButton:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 30px rgba(197,104,135,.4);
+}
+
+.controlsHint {
+  font-size: 12px;
+
+  color: #6c7f90;
+}
+
+.cloudDecoration {
+  position: absolute;
+
+  right: 30px;
+  top: 20px;
+
+  font-size: 40px;
+
+  color: rgba(255,255,255,.8);
+
+  animation: drift 4s infinite alternate;
+}
+
+.bigHeart {
+  font-size: 75px;
+
+  color: #d889a0;
+
+  animation: heartbeat 1.4s infinite;
+}
+
+.giftButton {
+  border: 0;
+
+  background: transparent;
+
+  font-size: 120px;
+
+  cursor: pointer;
+
+  transition:
+    transform .25s,
+    filter .25s;
+
+  filter:
+    drop-shadow(
+      0 15px 12px
+      rgba(50,60,70,.2)
+    );
+}
+
+.giftButton:hover {
+  transform:
+    translateY(-8px)
+    scale(1.08)
+    rotate(-2deg);
+}
+
+.finalCard {
+  width: min(720px, 94vw);
+
+  max-height: 94vh;
+
+  overflow-y: auto;
+
+  padding: 30px;
+}
+
+.finalCard img {
+  display: block;
+
+  width: min(600px, 100%);
+
+  max-height: 58vh;
+
+  object-fit: contain;
+
+  margin: 10px auto 20px;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(45,58,73,.22);
+
+  animation: imageIn .9s ease;
+}
+
+.finalCard h2 {
+  color: #c86e89;
+
+  margin-bottom: 15px;
+}
+
+.finalCard p {
+  font-size: clamp(15px,2.2vw,19px);
+
+  line-height: 1.7;
+}
+
+.finalDecor {
+  color: #d48aa0;
+
+  font-size: 20px;
+
+  margin: 10px;
+}
+
+.smallButton {
+  border: 1px solid rgba(255,255,255,.8);
+
+  background: rgba(255,255,255,.7);
+
+  color: #40566b;
+
+  padding: 9px 16px;
+
+  border-radius: 30px;
+
+  cursor: pointer;
+}
+
+#touchControls {
+  position: absolute;
+
+  z-index: 15;
+
+  bottom: 18px;
+
+  left: 0;
+  right: 0;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 0 18px;
+
+  pointer-events: none;
+}
+
+.touchButton {
+  width: 62px;
+  height: 62px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255,255,255,.8);
+
+  background: rgba(255,255,255,.65);
+
+  color: #4b6277;
+
+  box-shadow:
+    0 8px 24px
+    rgba(45,76,105,.18);
+
+  font-size: 22px;
+
+  pointer-events: auto;
+
+  touch-action: none;
+}
+
+.touchButton.fire {
+  width: 70px;
+  height: 70px;
+
+  color: #c86e89;
+
+  font-size: 30px;
+}
+
+@keyframes panelIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(20px)
+      scale(.97);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+@keyframes imageIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      scale(.96)
+      translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      translateY(0);
+  }
+
+}
+
+@keyframes heartbeat {
+
+  0%,100% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.1);
+  }
+
+  28% {
+    transform: scale(1);
+  }
+
+  42% {
+    transform: scale(1.1);
+  }
+
+}
+
+@keyframes drift {
+
+  from {
+    transform: translateX(-5px);
+  }
+
+  to {
+    transform: translateX(15px);
+  }
+
+}
+
+@media (max-width:700px) {
+
+  #hud {
+    top: 9px;
+    left: 9px;
+    right: 9px;
+  }
+
+  #levelLabel {
+    font-size: 11px;
+  }
+
+  #musicBtn {
+    font-size: 11px;
+  }
+
+  .panel {
+    border-radius: 24px;
+  }
+
+  .controlsHint {
+    display: none;
+  }
+
+}
+
+@media (hover:hover) and (pointer:fine) {
+
+  #touchControls {
+    display: none !important;
+  }
+
+}
+
+/* ===== PÉTALOS ===== */
+#petalLayer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;   /* los clics pasan a través */
+  z-index: 5;
+}
+
+.petal {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background: radial-gradient(circle at 30% 30%, #ffffff, #f2f6fb 70%);
+  border-radius: 100% 0 100% 0;   /* forma de pétalo */
+  box-shadow: 0 2px 6px rgba(60, 90, 130, .25);
+
+  will-change: transform, opacity;
+}
+
+#finalScreen {
+  overflow: hidden;
+  background: #cfe6f7;   /* color de respaldo mientras carga */
+}
+
+#finalScreen::before {
+  content: "";
+  position: absolute;
+  inset: -40px;          /* evita bordes claros por el desenfoque */
+  background: url("images/mensaje.png") center / cover no-repeat;
+  filter: blur(22px);
+}
+
+/* Los bordes de la imagen nítida se funden con el fondo */
+#finalScreen .startBg {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 5%, #000 95%, transparent),
+    linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 5%, #000 95%, transparent),
+    linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+  mask-composite: intersect;
+}

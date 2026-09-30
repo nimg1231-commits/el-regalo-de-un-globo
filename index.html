@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entre Nubes y Corazones ♡</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!--
+    Si estás leyendo esto es porque eres bien chimba y curioso, jajaja. 
+    Este mensaje lo puse a propósito dentro de los códigos, esperando que algún día lo encontraras. 
+    Solo quería decirte por aquí que te quiero muchísimo y que este regalo fue hecho con mucho esfuerzo, dedicación y cariño para ti. 
+    Espero de corazón que te haya gustado. 
+    También quería decirte que, en todo este tiempo que te he ido conociendo, me he dado cuenta de que eres un gran chico. 
+    Eres dedicado a tus estudios y a tu trabajo, y admiro mucho el esfuerzo que pones cada día para conseguir tus metas. 
+    Nunca dejes de lado tus sueños. Todo tu esfuerzo y dedicación valen la pena, y estoy segura de que llegarás muy lejos. 
+    Espero poder estar a tu lado para verte cumplir tus metas y triunfar siempre. Te quiero mucho, Joaquín. S2
+  -->
+
+<audio id="bgMusic" loop>
+  <source src="Musica.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="gameCanvas"></canvas>
+
+<div id="hud">
+  <div id="levelLabel"></div>
+  <div id="progressWrap" class="hidden">
+    <div id="progressText"></div>
+    <div class="progressBar">
+      <div id="progressFill"></div>
+    </div>
+  </div>
+  <button id="musicBtn">♫ Música</button>
+</div>
+
+<!-- INICIO -->
+<section id="overlay" class="overlay">
+  <div class="startPanel">
+    <img class="startBg" src="images/inicio.png" alt="Que comience el juego">
+
+    <button id="startBtn" class="startBtn" aria-label="Comenzar vuelo">
+      <img src="images/boton_continuar.png" alt="Comenzar vuelo">
+    </button>
+  </div>
+</section>
+
+
+<!-- TRANSICIÓN (después del nivel 1) -->
+<section id="transition" class="overlay hidden">
+  <div class="startPanel">
+    <img class="startBg" src="images/inicio_level2.png" alt="Nivel 2">
+    <button id="continueBtn" class="startBtn" aria-label="Continuar al nivel 2">
+      <img src="images/boton_continuar.png" alt="Continuar">
+    </button>
+  </div>
+</section>
+
+<!-- CONSEGUIDO (después del nivel 2) -->
+<section id="doneScreen" class="overlay hidden">
+  <div class="startPanel">
+    <img class="startBg" src="images/conseguido.png" alt="¡Lo lograste!">
+    <button id="doneBtn" class="startBtn" aria-label="Continuar">
+      <img src="images/boton_continuar.png" alt="Continuar">
+    </button>
+  </div>
+</section>
+
+<!-- REGALO -->
+<section id="giftScreen" class="overlay hidden">
+  <div class="startPanel">
+    <img class="startBg" src="images/regalo_final.png" alt="Tengo algo para ti">
+    <button id="giftBtn" class="startBtn" aria-label="Abrir regalo">
+      <img src="images/boton_regalo.png" alt="Regalo">
+    </button>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section id="finalScreen" class="overlay hidden">
+  <div class="startPanel">
+    <img id="finalImage" class="startBg" src="images/mensaje.png" alt="Mensaje final">
+    <button id="restartBtn" class="restartBtn">Volver a jugar ♡</button>
+  </div>
+  <div id="petalLayer"></div>
+</section>
+
+<!-- CONTROLES CELULAR -->
+<div id="touchControls" class="hidden">
+
+  <button id="upTouch" class="touchButton">
+    ▲
+  </button>
+
+  <button id="downTouch" class="touchButton">
+    ▼
+  </button>
+
+  <button id="fireTouch" class="touchButton fire">
+    ♡
+  </button>
+
+</div>
+
+<!-- MÚSICA OPCIONAL -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script src="script.js"></script>
+
+</body>
+</html>
